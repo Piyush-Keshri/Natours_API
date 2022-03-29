@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable import/newline-after-import */
+/* eslint-disable prettier/prettier */
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.ev' });
 
