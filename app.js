@@ -5,6 +5,8 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: './config.env' });
 
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 
@@ -29,8 +31,16 @@ app.use((req, res, next) => {
   next();
 });
 
-//Mounting A new Router in a route
+//Routes
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
+
+// If Url is not defined
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`), 404);
+});
+
+// Error Handling MiddleWare
+app.use(globalErrorHandler);
 
 module.exports = app;
